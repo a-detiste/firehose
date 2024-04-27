@@ -22,7 +22,7 @@ import subprocess
 import tempfile
 import unittest
 
-from six import u, StringIO, BytesIO
+from six import StringIO, BytesIO
 
 from firehose.model import Analysis, Issue, Metadata, Generator, SourceRpm, \
     Location, File, Function, Point, Message, Notes, Trace, State, Stats, \
@@ -333,7 +333,7 @@ class AnalysisTests(unittest.TestCase):
     def test_non_ascii_example(self):
         with open('examples/example-non-ascii.xml') as f:
             a = Analysis.from_xml(f)
-            self.assertEqual(a.metadata.generator.name, u('\u2620') * 8)
+            self.assertEqual(a.metadata.generator.name, u'\u2620' * 8)
 
             self.assertEqual(len(a.results), 1)
             w = a.results[0]
@@ -343,15 +343,15 @@ class AnalysisTests(unittest.TestCase):
             #  "comparison between signed and unsigned integer expressions"
             # within the message:
             self.assertEqual(w.message.text,
-                             (u('\u7b26\u53f7\u4ed8\u304d\u3068\u7b26\u53f7'
-                                '\u7121\u3057\u306e\u6574\u6570\u5f0f\u306e'
-                                '\u9593\u3067\u306e\u6bd4\u8f03\u3067\u3059')))
+                             (u'\u7b26\u53f7\u4ed8\u304d\u3068\u7b26\u53f7'
+                              u'\u7121\u3057\u306e\u6574\u6570\u5f0f\u306e'
+                              u'\u9593\u3067\u306e\u6bd4\u8f03\u3067\u3059'))
 
             # Verify the "mojibake" Kanji/Hiragana within the notes:
-            self.assertIn(u('\u6587\u5b57\u5316\u3051'),
+            self.assertIn(u'\u6587\u5b57\u5316\u3051',
                           w.notes.text)
 
-            self.assertEqual(w.location.function.name, u('oo\u025f'))
+            self.assertEqual(w.location.function.name, u'oo\u025f')
 
     def test_to_xml(self):
         def validate(xmlbytes):
