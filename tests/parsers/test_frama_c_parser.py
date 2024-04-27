@@ -1,6 +1,9 @@
 import unittest
 
-import mock
+try:
+    from unittest import mock
+except:
+    import mock
 
 from firehose.parsers import frama_c
 from firehose.model import Issue, Location, File, Point, \

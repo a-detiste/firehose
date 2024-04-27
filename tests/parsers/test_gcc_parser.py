@@ -17,7 +17,10 @@
 
 import unittest
 
-import mock
+try:
+    from unittest import mock
+except ImportError:
+    import mock
 
 from firehose.parsers import gcc # import parse_warning, parse_file
 from firehose.model import Analysis, Issue, Location, File, Point, \
